@@ -2,6 +2,7 @@ package com.kyrioslab.jffmpegw.command;
 
 import com.kyrioslab.jffmpegw.attributes.VideoSize;
 import org.apache.commons.io.IOUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.nio.file.Paths;
@@ -11,8 +12,9 @@ import static org.junit.Assert.assertEquals;
 public class CommandExecutorTest {
 
     @Test
+    @Ignore
     public void testExecute() throws Exception, BuilderException {
-        String ffmpeg = this.getClass().getResource("/ffmpeg").getPath();
+        String ffmpeg = Command.FFMPEG_LOCATION;
         Command command = new EncodeCommandBuilder(ffmpeg)
                 .enableAudio()
                 .enableVideo()

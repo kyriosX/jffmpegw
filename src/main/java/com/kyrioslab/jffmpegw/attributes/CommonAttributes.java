@@ -21,20 +21,20 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
     }
 
     /**
-     * Get duration in seconds
+     * Get duration in millis
      *
-     * @return duration in seconds
+     * @return duration in millis
      */
-    public int getDuration() {
+    public long getDuration() {
         return Integer.parseInt(attributes.get(DURATION));
     }
 
     /**
-     * Set duration in seconds
+     * Set duration in millis
      *
-     * @param duration in seconds
+     * @param duration in millis
      */
-    public void setDuration(int duration) {
+    public void setDuration(long duration) {
         attributes.put(DURATION, String.valueOf(duration));
     }
 

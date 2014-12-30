@@ -9,6 +9,8 @@ import java.util.List;
  */
 public interface Command {
 
+    String FFMPEG_LOCATION = Command.class.getResource("/ffmpeg").getPath();
+
     /**
      * Standart FFMPEG command argument attributes
      */
@@ -25,6 +27,12 @@ public interface Command {
             public static final String VIDEO_DISABLED = "-vn";
             public static final String AUDIO_DISABLED = "-an";
             public static final String FORMAT = "-f";
+            public static final String SEGMENT = "segment";
+            public static final String SEGMENT_TIME = "-segment_time";
+            public static final String CODECS = "-c";
+            public static final String CODEC_COPY = "copy";
+            public static final String MAP = "-map";
+            public static final String CONCAT = "concat";
 
             /**
              * Overwrite output files without asking
@@ -40,18 +48,18 @@ public interface Command {
             public void setInputFile(String inputFile);
 
             /**
-             * Get duration in seconds
+             * Get duration in millis
              *
-             * @return duration in seconds
+             * @return duration in millis
              */
-            public int getDuration();
+            public long getDuration();
 
             /**
-             * Set duration in seconds
+             * Set duration in millis
              *
-             * @param duration in seconds
+             * @param duration in millis
              */
-            public void setDuration(int duration);
+            public void setDuration(long duration);
 
             public boolean isVideoDisabled();
 

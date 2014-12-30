@@ -1,5 +1,6 @@
 package com.kyrioslab.jffmpegw.command;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -7,6 +8,7 @@ import static org.junit.Assert.*;
 public class CommandBuilderTest {
 
     @Test
+    @Ignore
     public void testBuild() throws Exception, BuilderException {
         EncodeCommandBuilder builder = new EncodeCommandBuilder("testloc");
         Command command = builder.disableAudio()

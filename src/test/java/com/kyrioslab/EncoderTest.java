@@ -2,6 +2,7 @@ package com.kyrioslab;
 
 import com.kyrioslab.jffmpegw.attributes.CommonAttributes;
 import com.kyrioslab.jffmpegw.attributes.VideoSize;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.File;
@@ -105,6 +106,7 @@ public class EncoderTest {
     }
 
     @org.junit.Test
+    @Ignore
     public void testEncode() throws Exception {
         Encoder encoder = new Encoder(locator);
         File source = new File(vidPath);

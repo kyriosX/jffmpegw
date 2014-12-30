@@ -1,12 +1,13 @@
 package com.kyrioslab.jffmpegw.attributes;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public abstract class Attributes {
+public abstract class Attributes implements Serializable{
     /**
-     * Aggregates common attributes with |attribute key:attribute value| format
+     * Aggregates common attributes. Format "key:value"
      */
     protected Map<String, String> attributes = new HashMap<String, String>();
 
