@@ -36,7 +36,11 @@ public class VideoAttributes extends Attributes implements Command.Attributes.Vi
 
     @Override
     public double getFrameRate() {
-        return Double.parseDouble(attributes.get(FRAME_RATE));
+        String frameRate = attributes.get(FRAME_RATE);
+        if (frameRate != null) {
+            return Double.parseDouble(frameRate);
+        }
+        return -1;
     }
 
     @Override
@@ -46,7 +50,11 @@ public class VideoAttributes extends Attributes implements Command.Attributes.Vi
 
     @Override
     public VideoSize getVideoSize() {
-        return new VideoSize(attributes.get(SIZE));
+        String size = attributes.get(SIZE);
+        if (size != null) {
+            return new VideoSize(size);
+        }
+        return null;
     }
 
     @Override

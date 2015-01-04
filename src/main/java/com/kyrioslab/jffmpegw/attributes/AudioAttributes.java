@@ -26,7 +26,11 @@ public class AudioAttributes extends Attributes implements Command.Attributes.Au
 
     @Override
     public int getChannels() {
-        return Integer.parseInt(attributes.get(CHANNELS));
+        String channels = attributes.get(CHANNELS);
+        if (channels != null) {
+            return Integer.parseInt(channels);
+        }
+        return -1;
     }
 
     @Override
@@ -36,7 +40,11 @@ public class AudioAttributes extends Attributes implements Command.Attributes.Au
 
     @Override
     public int getSamplingRate() {
-        return Integer.parseInt(attributes.get(SAMPLING_RATE));
+        String samplingRate = attributes.get(SAMPLING_RATE);
+        if (samplingRate != null) {
+            return Integer.parseInt(samplingRate);
+        }
+        return -1;
     }
 
     @Override
@@ -46,7 +54,11 @@ public class AudioAttributes extends Attributes implements Command.Attributes.Au
 
     @Override
     public int getVolume() {
-        return Integer.parseInt(attributes.get(VOLUME));
+        String volume = attributes.get(VOLUME);
+        if (volume != null) {
+            return Integer.parseInt(volume);
+        }
+        return -1;
     }
 
     @Override

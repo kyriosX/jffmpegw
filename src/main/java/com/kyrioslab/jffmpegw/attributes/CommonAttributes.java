@@ -26,7 +26,11 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
      * @return duration in millis
      */
     public long getDuration() {
-        return Integer.parseInt(attributes.get(DURATION));
+        String duration = attributes.get(DURATION);
+        if (duration != null) {
+            return Integer.parseInt(duration);
+        }
+        return -1;
     }
 
     /**
@@ -39,7 +43,8 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
     }
 
     public boolean isVideoDisabled() {
-        return Boolean.parseBoolean(attributes.get(VIDEO_DISABLED));
+        String isDisabled = attributes.get(VIDEO_DISABLED);
+        return isDisabled != null && Boolean.parseBoolean(isDisabled);
     }
 
     public void disableVideo() {
@@ -51,7 +56,8 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
     }
 
     public boolean isAudioDisabled() {
-        return Boolean.parseBoolean(attributes.get(AUDIO_DISABLED));
+        String isDisabled = attributes.get(AUDIO_DISABLED);
+        return isDisabled != null && Boolean.parseBoolean(isDisabled);
     }
 
     public void disableAudio() {
@@ -74,7 +80,8 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
         attributes.put(OWERRIDE, String.valueOf(owerride));
     }
 
-    public boolean isOweride() {
-        return Boolean.parseBoolean(attributes.get(OWERRIDE));
+    public boolean isOwerride() {
+        String isOwerride = attributes.get(OWERRIDE);
+        return isOwerride != null && Boolean.parseBoolean(isOwerride);
     }
 }

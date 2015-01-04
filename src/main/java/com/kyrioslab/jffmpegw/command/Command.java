@@ -79,7 +79,7 @@ public interface Command {
 
             public void setOwerride(boolean owerride);
 
-            public boolean isOweride();
+            public boolean isOwerride();
         }
 
         /**
