@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Created by Ivan Kirilyuk on 28.12.14.
+ *
  */
 public class SplitCommand implements Command {
 

@@ -4,6 +4,10 @@ import com.kyrioslab.jffmpegw.command.Command;
 
 public class AudioAttributes extends Attributes implements Command.Attributes.Audio{
 
+    public AudioAttributes() {
+
+    }
+
     @Override
     public String getCodec() {
         return attributes.get(CODEC);

@@ -4,6 +4,10 @@ import com.kyrioslab.jffmpegw.command.Command;
 
 public class CommonAttributes extends Attributes implements Command.Attributes.Common {
 
+    public CommonAttributes() {
+
+    }
+
     public String getOffset() {
         return attributes.get(OFFSET);
     }

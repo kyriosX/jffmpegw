@@ -4,6 +4,10 @@ import com.kyrioslab.jffmpegw.command.Command;
 
 public class VideoAttributes extends Attributes implements Command.Attributes.Video {
 
+    public VideoAttributes() {
+
+    }
+
     @Override
     public String getCodec() {
         return attributes.get(CODEC);
