@@ -8,9 +8,7 @@ import java.util.List;
  * Created by Ivan Kirilyuk on 28.12.14.
  *
  */
-public class MergeCommand implements Command {
-
-    protected List<String> command = new ArrayList<String>();
+public class MergeCommand extends Command {
 
     /**
      * Command for merging video from parts
@@ -37,6 +35,11 @@ public class MergeCommand implements Command {
     public void addAttribute(String key, String value) {
         command.add(key);
         command.add(value);
+    }
+
+    @Override
+    public void setFfmpegLocation(String ffmpegLocation) {
+        command.set(0,ffmpegLocation);
     }
 
     @Override

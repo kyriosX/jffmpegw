@@ -1,14 +1,8 @@
 package com.kyrioslab.jffmpegw.attributes.parser;
 
 import com.google.gson.FieldNamingPolicy;
-import com.google.gson.FieldNamingStrategy;
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.kyrioslab.jffmpegw.attributes.AudioAttributes;
-import com.kyrioslab.jffmpegw.attributes.CommonAttributes;
-import com.kyrioslab.jffmpegw.attributes.VideoAttributes;
 import com.kyrioslab.jffmpegw.command.Command;
-import com.kyrioslab.jffmpegw.command.CommandBuilder;
 import com.kyrioslab.jffmpegw.command.CommandExecutor;
 import com.kyrioslab.jffmpegw.command.ProbeInfoCommand;
 
@@ -22,7 +16,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public  class InfoParser {
+public class InfoParser {
 
     private static final Pattern ENCODER_DECODER_PATTERN = Pattern.compile(
             "^\\s(\\S+)\\s(\\S+)\\s+(\\S+).*", Pattern.CASE_INSENSITIVE);
@@ -44,7 +38,7 @@ public  class InfoParser {
         MultimediaInfo multimediaInfo = new GsonBuilder()
                 .setFieldNamingStrategy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .create().fromJson(new InputStreamReader(infoStream),
-                MultimediaInfo.class);
+                        MultimediaInfo.class);
 
         Command codecsInfoCommand = new Command() {
             @Override
@@ -56,10 +50,6 @@ public  class InfoParser {
                         "quiet"
                 );
             }
-            @Override
-            public void addAttribute(String key) {}
-            @Override
-            public void addAttribute(String key, String value) {}
         };
 
         Process cp = CommandExecutor.execute(codecsInfoCommand);
@@ -71,7 +61,7 @@ public  class InfoParser {
         Scanner cInfoScanner = new Scanner(cp.getInputStream());
 
         //move to start
-        while (!cInfoScanner.nextLine().equals(" -------"));
+        while (!cInfoScanner.nextLine().equals(" -------")) ;
 
         List<InfoItem> fullVideoSupportCodecList = new ArrayList<>();
         List<InfoItem> fullAudioSupportCodecList = new ArrayList<>();
@@ -111,10 +101,6 @@ public  class InfoParser {
                         "quiet"
                 );
             }
-            @Override
-            public void addAttribute(String key) {}
-            @Override
-            public void addAttribute(String key, String value) {}
         };
 
         Process fp = CommandExecutor.execute(formatInfoCommand);
@@ -126,7 +112,8 @@ public  class InfoParser {
         Scanner fInfoScanner = new Scanner(fp.getInputStream());
 
         //move to start
-        while (!fInfoScanner.nextLine().equals(" --")) {}
+        while (!fInfoScanner.nextLine().equals(" --")) {
+        }
 
         List<InfoItem> formatFullSupportList = new ArrayList<>();
         while (fInfoScanner.hasNextLine()) {

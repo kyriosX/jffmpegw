@@ -1,130 +1,130 @@
 package com.kyrioslab.jffmpegw.command;
 
+import com.google.common.base.Strings;
+import com.kyrioslab.jffmpegw.attributes.Attributes;
 import com.kyrioslab.jffmpegw.attributes.AudioAttributes;
-import com.kyrioslab.jffmpegw.attributes.CommonAttributes;
 import com.kyrioslab.jffmpegw.attributes.VideoAttributes;
-import com.kyrioslab.jffmpegw.attributes.VideoSize;
+import com.kyrioslab.jffmpegw.attributes.parser.StreamInfo;
 
-public class EncodeCommandBuilder extends CommandBuilder {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-    public EncodeCommandBuilder(String FFMPEGLocation) throws BuilderException {
+public class EncodeCommandBuilder {
+
+    private static final String CODEC_TYPE_VIDEO = "video";
+    private static final String CODEC_TYPE_AUDIO = "audio";
+
+    protected List<Attributes> skel = new ArrayList<>();
+
+    protected EncodeCommand command;
+
+    public EncodeCommandBuilder(String FFMPEGLocation, Iterable<StreamInfo> streams) throws BuilderException {
         if (FFMPEGLocation == null) {
             throw new BuilderException("FFMPEG location not set");
         }
         command = new EncodeCommand();
         command.addAttribute(FFMPEGLocation);
-    }
 
-    public EncodeCommandBuilder(String FFMPEGLocation, CommonAttributes ca, VideoAttributes va,
-                                AudioAttributes aa) throws BuilderException {
-        this(FFMPEGLocation);
-        commonAttributes = ca;
-        videoAttributes = va;
-        audioAttributes = aa;
-    }
-
-    public EncodeCommandBuilder setOffset(String offset) {
-        commonAttributes.setOffset(offset);
-        return this;
-    }
-
-    public EncodeCommandBuilder setInputFile(String inputFile) {
-        commonAttributes.setInputFile(inputFile);
-        return this;
+        //set input as undefined
+        command.setInput("");
+        addStreams(streams);
     }
 
     /**
-     * Set duration in seconds
+     * Add stream attributes to command.
      *
-     * @param duration in seconds
+     * @param stream stream info
+     * @throws BuilderException
      */
-    public EncodeCommandBuilder setDuration(int duration) {
-        commonAttributes.setDuration(duration);
-        return this;
+    public void addStream(StreamInfo stream) throws BuilderException {
+        switch (stream.getCodecType()) {
+            case CODEC_TYPE_VIDEO: {
+                VideoAttributes va = new VideoAttributes();
+                va.setMap(stream.getIndex());
+
+                String codecName = stream.getCodecName();
+                String bitRate = stream.getBitRate();
+                String frameRate = stream.getAvgFrameRate();
+                String width = stream.getWidth();
+                String height = stream.getHeight();
+
+                if (!Strings.isNullOrEmpty(codecName)) {
+                    va.setCodec(codecName);
+                }
+                if (!Strings.isNullOrEmpty(bitRate)) {
+                    va.setBitRate(bitRate);
+                }
+                if (!Strings.isNullOrEmpty(frameRate)) {
+                    va.setFrameRate(frameRate);
+                }
+                if (!Strings.isNullOrEmpty(width) &&
+                        !Strings.isNullOrEmpty(height)) {
+                    va.setVideoSize(width + "x" + height);
+                }
+                skel.add(va);
+            }
+            break;
+            case CODEC_TYPE_AUDIO: {
+                AudioAttributes aa = new AudioAttributes();
+                aa.setMap(stream.getIndex());
+
+                String codecName = stream.getCodecName();
+                String bitRate = stream.getBitRate();
+                String channels = stream.getChannels();
+                String sampleRate = stream.getSampleRate();
+
+                if (!Strings.isNullOrEmpty(codecName)) {
+                    aa.setCodec(codecName);
+                }
+                if (!Strings.isNullOrEmpty(bitRate)) {
+                    aa.setBitRate(bitRate);
+                }
+                if (!Strings.isNullOrEmpty(channels)) {
+                    aa.setChannels(channels);
+                }
+                if (!Strings.isNullOrEmpty(sampleRate)) {
+                    aa.setSamplingRate(sampleRate);
+                }
+                skel.add(aa);
+            }
+            break;
+            default:
+                throw new BuilderException("Unknown codec type: " + stream.getCodecType());
+        }
     }
 
-    public EncodeCommandBuilder disableVideo() {
-        commonAttributes.disableVideo();
-        return this;
+    /**
+     * Add stream configurations to command.
+     *
+     * @param streams stream list
+     * @throws BuilderException
+     */
+    public void addStreams(Iterable<StreamInfo> streams) throws BuilderException {
+        for (StreamInfo stream : streams) {
+            addStream(stream);
+        }
     }
 
-    public EncodeCommandBuilder enableVideo() {
-        commonAttributes.enableVideo();
-        return this;
+    public EncodeCommand build() {
+        for (Attributes attributes : skel) {
+            addAttributes(attributes);
+        }
+        return command;
     }
 
-    public EncodeCommandBuilder disableAudio() {
-        commonAttributes.disableAudio();
-        return this;
-    }
+    private void addAttributes(Attributes attributes) {
+        Map<String, String> amap = attributes.getAttributes();
 
-    public EncodeCommandBuilder enableAudio() {
-        commonAttributes.enableAudio();
-        return this;
-    }
+        //place map first
+        if (amap.containsKey(Command.Attributes.Common.MAP)) {
+            command.addAttribute(Command.Attributes.Common.MAP,
+                    amap.remove(Command.Attributes.Common.MAP));
+        }
 
-    public EncodeCommandBuilder setFormat(String format) {
-        commonAttributes.setFormat(format);
-        return this;
-    }
-
-    public EncodeCommandBuilder setOwerride(boolean owerride) {
-        commonAttributes.setOwerride(owerride);
-        return this;
-    }
-
-    public EncodeCommandBuilder setVideoCodec(String codec){
-        videoAttributes.setCodec(codec);
-        return this;
-    }
-
-    public EncodeCommandBuilder seVideotTag(String tag){
-        videoAttributes.setTag(tag);
-        return this;
-    }
-
-    public EncodeCommandBuilder setVideoBitRate(String bitRate){
-        videoAttributes.setBitRate(bitRate);
-        return this;
-    }
-
-    public EncodeCommandBuilder setFrameRate(double frameRate){
-        videoAttributes.setFrameRate(frameRate);
-        return this;
-    }
-
-    public EncodeCommandBuilder setVideoSize(VideoSize vsize){
-        videoAttributes.setVideoSize(vsize);
-        return this;
-    }
-
-    public EncodeCommandBuilder setAudioCodec(String codec) {
-        audioAttributes.setCodec(codec);
-        return this;
-    }
-
-    public EncodeCommandBuilder setAudioBitRate(String bitRate){
-        audioAttributes.setBitRate(bitRate);
-        return this;
-    }
-
-    public EncodeCommandBuilder setChannels(int channelsCount){
-        audioAttributes.setChannels(channelsCount);
-        return this;
-    }
-
-    public EncodeCommandBuilder setAudioSamplingRate(int samplingRate){
-        audioAttributes.setSamplingRate(samplingRate);
-        return this;
-    }
-
-    public EncodeCommandBuilder setVolume(int volume){
-        audioAttributes.setVolume(volume);
-        return this;
-    }
-
-    public EncodeCommandBuilder setTarget(String absPath) {
-        command.addAttribute(absPath);
-        return this;
+        //add attributes
+        for (Map.Entry<String, String> atrr : attributes.getAttributes().entrySet()) {
+            command.addAttribute(atrr.getKey(), atrr.getValue());
+        }
     }
 }

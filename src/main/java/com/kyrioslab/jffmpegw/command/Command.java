@@ -1,15 +1,17 @@
 package com.kyrioslab.jffmpegw.command;
 
-import com.kyrioslab.jffmpegw.attributes.VideoSize;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A Class represents FFMPEG command
  */
-public interface Command {
+public abstract class Command implements Serializable{
 
-    String FFMPEG_LOCATION = Command.class.getResource("/ffmpeg").getPath();
+    protected List<String> command = new ArrayList<String>();
 
     /**
      * Standart FFMPEG command argument attributes
@@ -52,22 +54,22 @@ public interface Command {
              *
              * @return duration in millis
              */
-            public long getDuration();
+            public String getDuration();
 
             /**
              * Set duration in millis
              *
              * @param duration in millis
              */
-            public void setDuration(long duration);
+            public void setDuration(String duration);
 
-            public boolean isVideoDisabled();
+            public String isVideoDisabled();
 
             public void disableVideo();
 
             public void enableVideo();
 
-            public boolean isAudioDisabled();
+            public String isAudioDisabled();
 
             public void disableAudio();
 
@@ -77,9 +79,9 @@ public interface Command {
 
             public void setFormat(String format);
 
-            public void setOwerride(boolean owerride);
+            public void setOwerride(String owerride);
 
-            public boolean isOwerride();
+            public String isOwerride();
         }
 
         /**
@@ -91,6 +93,7 @@ public interface Command {
             public static final String BIT_RATE = "-b";
             public static final String FRAME_RATE = "-r";
             public static final String SIZE = "-s";
+            public static final String MAP = "-map";
 
             public String getCodec();
 
@@ -104,13 +107,13 @@ public interface Command {
 
             public void setBitRate(String bitRate);
 
-            public double getFrameRate();
+            public String getFrameRate();
 
-            public void setFrameRate(double frameRate);
+            public void setFrameRate(String frameRate);
 
-            public VideoSize getVideoSize();
+            public String getVideoSize();
 
-            public void setVideoSize(VideoSize vsize);
+            public void setVideoSize(String vsize);
         }
 
         /**
@@ -122,6 +125,7 @@ public interface Command {
             public static final String CHANNELS = "-ac";
             public static final String SAMPLING_RATE = "-ar";
             public static final String VOLUME = "-vol";
+            public static final String MAP = "-map";
 
             public String getCodec();
 
@@ -131,23 +135,35 @@ public interface Command {
 
             public void setBitRate(String bitRate);
 
-            public int getChannels();
+            public String getChannels();
 
-            public void setChannels(int channelsCount);
+            public void setChannels(String channelsCount);
 
-            public int getSamplingRate();
+            public String getSamplingRate();
 
-            public void setSamplingRate(int samplingRate);
+            public void setSamplingRate(String samplingRate);
 
-            public int getVolume();
+            public String getVolume();
 
-            public void setVolume(int volume);
+            public void setVolume(String volume);
         }
     }
 
-    public void addAttribute(String key);
+    public void addAttribute(String key) {
+        throw new NotImplementedException();
+    }
 
-    public void addAttribute(String key, String value);
+    public void addAttribute(String key, String value) {
+        throw new NotImplementedException();
+    }
 
-    public List<String> getCommand();
+    public void setFfmpegLocation(String ffmpegLocation) {
+        throw new NotImplementedException();
+    }
+
+    public void setInput(String inputFile) {
+        throw new NotImplementedException();
+    }
+
+    public abstract List<String> getCommand();
 }

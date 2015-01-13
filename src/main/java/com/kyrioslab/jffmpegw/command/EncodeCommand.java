@@ -1,18 +1,16 @@
 package com.kyrioslab.jffmpegw.command;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class EncodeCommand implements Command {
+public class EncodeCommand extends Command {
 
-    protected List<String> command = new ArrayList<String>();
+    private static final int FFMPEG_INDEX_DEFAULT = 0;
+    private static final int INPUT_INDEX_DEFAULT = 1;
+
+    private String inputFormat;
+    private String outputFormat;
 
     public EncodeCommand() {
-
-    }
-
-    public EncodeCommand(List<String> command) {
-        this.command = command;
     }
 
     @Override
@@ -27,7 +25,36 @@ public class EncodeCommand implements Command {
     }
 
     @Override
+    public void setFfmpegLocation(String ffmpegLocation) {
+        command.set(FFMPEG_INDEX_DEFAULT, ffmpegLocation);
+    }
+
+    @Override
+    public void setInput(String inputFile) {
+        if (command.size() < 2) {
+            command.add(Attributes.Common.INPUT);
+            command.add(inputFile);
+        } else {
+            command.set(INPUT_INDEX_DEFAULT, Attributes.Common.INPUT);
+            command.set(INPUT_INDEX_DEFAULT + 1, inputFile);
+        }
+    }
+
+    @Override
     public List<String> getCommand() {
         return command;
+    }
+
+    public void setFormats(String inputFormat, String outputFormat) {
+        this.inputFormat = inputFormat;
+        this.outputFormat = outputFormat;
+    }
+
+    public String getInputFormat() {
+        return inputFormat;
+    }
+
+    public String getOutputFormat() {
+        return outputFormat;
     }
 }

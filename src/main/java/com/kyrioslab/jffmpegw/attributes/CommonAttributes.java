@@ -29,12 +29,8 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
      *
      * @return duration in millis
      */
-    public long getDuration() {
-        String duration = attributes.get(DURATION);
-        if (duration != null) {
-            return Integer.parseInt(duration);
-        }
-        return -1;
+    public String getDuration() {
+        return attributes.get(DURATION);
     }
 
     /**
@@ -42,13 +38,12 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
      *
      * @param duration in millis
      */
-    public void setDuration(long duration) {
-        attributes.put(DURATION, String.valueOf(duration));
+    public void setDuration(String duration) {
+        attributes.put(DURATION, duration);
     }
 
-    public boolean isVideoDisabled() {
-        String isDisabled = attributes.get(VIDEO_DISABLED);
-        return isDisabled != null && Boolean.parseBoolean(isDisabled);
+    public String isVideoDisabled() {
+        return attributes.get(VIDEO_DISABLED);
     }
 
     public void disableVideo() {
@@ -59,9 +54,8 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
         attributes.remove(VIDEO_DISABLED);
     }
 
-    public boolean isAudioDisabled() {
-        String isDisabled = attributes.get(AUDIO_DISABLED);
-        return isDisabled != null && Boolean.parseBoolean(isDisabled);
+    public String isAudioDisabled() {
+        return attributes.get(AUDIO_DISABLED);
     }
 
     public void disableAudio() {
@@ -80,12 +74,11 @@ public class CommonAttributes extends Attributes implements Command.Attributes.C
         attributes.put(FORMAT, format);
     }
 
-    public void setOwerride(boolean owerride) {
-        attributes.put(OWERRIDE, String.valueOf(owerride));
+    public void setOwerride(String owerride) {
+        attributes.put(OWERRIDE, owerride);
     }
 
-    public boolean isOwerride() {
-        String isOwerride = attributes.get(OWERRIDE);
-        return isOwerride != null && Boolean.parseBoolean(isOwerride);
+    public String isOwerride() {
+        return attributes.get(OWERRIDE);
     }
 }

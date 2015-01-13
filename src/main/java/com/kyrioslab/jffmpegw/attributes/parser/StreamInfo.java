@@ -8,6 +8,7 @@ import java.io.Serializable;
  */
 public class StreamInfo implements Serializable{
 
+    private int    index;
     private String codecName;
     private String codecLongName;
     private String codecType;
@@ -16,6 +17,10 @@ public class StreamInfo implements Serializable{
     private String avgFrameRate;
     private String duration;
     private String bitRate;
+    private String sampleRate;
+    private String channels;
+
+    public StreamInfo () {}
 
     public String getCodecName() {
         return codecName;
@@ -81,4 +86,27 @@ public class StreamInfo implements Serializable{
         this.bitRate = bitRate;
     }
 
+    public String getSampleRate() {
+        return sampleRate;
+    }
+
+    public void setSampleRate(String sampleRate) {
+        this.sampleRate = sampleRate;
+    }
+
+    public String getChannels() {
+        return channels;
+    }
+
+    public void setChannels(String channels) {
+        this.channels = channels;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 }

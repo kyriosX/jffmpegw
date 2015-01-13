@@ -8,9 +8,7 @@ import java.util.List;
  * Created by Ivan Kirilyuk on 10.01.15.
  *
  */
-public class ProbeInfoCommand implements Command{
-
-    protected List<String> command = new ArrayList<String>();
+public class ProbeInfoCommand extends Command{
 
     /**
      * Command for getting media file attributes
@@ -40,6 +38,11 @@ public class ProbeInfoCommand implements Command{
     public void addAttribute(String key, String value) {
         command.add(key);
         command.add(value);
+    }
+
+    @Override
+    public void setFfmpegLocation(String ffmpegLocation) {
+        command.set(0,ffmpegLocation);
     }
 
     @Override

@@ -29,44 +29,32 @@ public class AudioAttributes extends Attributes implements Command.Attributes.Au
     }
 
     @Override
-    public int getChannels() {
-        String channels = attributes.get(CHANNELS);
-        if (channels != null) {
-            return Integer.parseInt(channels);
-        }
-        return -1;
+    public String getChannels() {
+        return attributes.get(CHANNELS);
     }
 
     @Override
-    public void setChannels(int channelsCount) {
-        attributes.put(CHANNELS, String.valueOf(channelsCount));
+    public void setChannels(String channelsCount) {
+        attributes.put(CHANNELS, channelsCount);
     }
 
     @Override
-    public int getSamplingRate() {
-        String samplingRate = attributes.get(SAMPLING_RATE);
-        if (samplingRate != null) {
-            return Integer.parseInt(samplingRate);
-        }
-        return -1;
+    public String getSamplingRate() {
+        return attributes.get(SAMPLING_RATE);
     }
 
     @Override
-    public void setSamplingRate(int samplingRate) {
-        attributes.put(SAMPLING_RATE, String.valueOf(samplingRate));
+    public void setSamplingRate(String samplingRate) {
+        attributes.put(SAMPLING_RATE, samplingRate);
     }
 
     @Override
-    public int getVolume() {
-        String volume = attributes.get(VOLUME);
-        if (volume != null) {
-            return Integer.parseInt(volume);
-        }
-        return -1;
+    public String getVolume() {
+        return attributes.get(VOLUME);
     }
 
     @Override
-    public void setVolume(int volume) {
-        attributes.put(VOLUME, String.valueOf(volume));
+    public void setVolume(String volume) {
+        attributes.put(VOLUME, volume);
     }
 }
