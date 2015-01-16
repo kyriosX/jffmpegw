@@ -21,9 +21,13 @@ public class InfoParser {
     private static final Pattern ENCODER_DECODER_PATTERN = Pattern.compile(
             "^\\s(\\S+)\\s(\\S+)\\s+(\\S+).*", Pattern.CASE_INSENSITIVE);
 
+    private static final Pattern PIX_FORMAT_PATTERN = Pattern.compile(
+            "^(\\S+)\\s(\\S+)\\s+(\\S+).*", Pattern.CASE_INSENSITIVE);
+
     private static final String CODEC_FULL_VIDEO_SUPPORT = "DEV";
     private static final String CODEC_FULL_AUDIO_SUPPORT = "DEA";
     private static final String FORMAT_FULL_SUPPORT = "DE";
+    private static final String PIX_FORMAT_FULL_SUPPORT = "IO";
 
     public static MultimediaInfo getInfo(final String probeLocation, String filePath) throws IOException, InterruptedException {
         ProbeInfoCommand infoCommand =
@@ -132,6 +136,49 @@ public class InfoParser {
             }
         }
         multimediaInfo.setFullSupportedFormats(formatFullSupportList);
+
+        //extract full supported pixel formats
+        Command pixFormatInfoCommand = new Command() {
+            @Override
+            public List<String> getCommand() {
+                return Arrays.asList(
+                        probeLocation,
+                        "-pix_fmts",
+                        "-v",
+                        "quiet"
+                );
+            }
+        };
+
+        Process pfp = CommandExecutor.execute(pixFormatInfoCommand);
+        if (pfp.waitFor() != 0) {
+            throw new IllegalStateException("Process exited with code: "
+                    + fp.exitValue());
+        }
+
+        Scanner pfInfoScanner = new Scanner(pfp.getInputStream());
+
+        //move to start
+        while (!pfInfoScanner.nextLine().equals("-----")) {}
+
+        List<InfoItem> pixFormatFullSupportList = new ArrayList<>();
+        while (pfInfoScanner.hasNextLine()) {
+            String line = pfInfoScanner.nextLine();
+            Matcher matcher = PIX_FORMAT_PATTERN.matcher(line);
+            if (matcher.matches()) {
+                String support = matcher.group(1);
+                if (support.startsWith(PIX_FORMAT_FULL_SUPPORT)) {
+                    InfoItem item = new InfoItem();
+                    item.setSupport(support);
+                    item.setName(matcher.group(2));
+                    item.setLongName(matcher.group(3));
+
+                    pixFormatFullSupportList.add(item);
+                }
+            }
+        }
+        multimediaInfo.setFullSupportedPixFormats(pixFormatFullSupportList);
+
         return multimediaInfo;
     }
 

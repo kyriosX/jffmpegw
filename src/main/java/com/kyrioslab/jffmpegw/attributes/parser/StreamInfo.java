@@ -6,21 +6,24 @@ import java.io.Serializable;
  * Created by Ivan Kirilyuk on 10.01.15.
  *
  */
-public class StreamInfo implements Serializable{
+public class StreamInfo implements Serializable {
 
-    private int    index;
+    private int index;
     private String codecName;
     private String codecLongName;
     private String codecType;
     private String width;
     private String height;
+    private String displayAspectRatio;
+    private String pixFmt;
     private String avgFrameRate;
     private String duration;
     private String bitRate;
     private String sampleRate;
     private String channels;
 
-    public StreamInfo () {}
+    public StreamInfo() {
+    }
 
     public String getCodecName() {
         return codecName;
@@ -108,5 +111,21 @@ public class StreamInfo implements Serializable{
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public String getDisplayAspectRatio() {
+        return displayAspectRatio;
+    }
+
+    public void setDisplayAspectRatio(String displayAspectRatio) {
+        this.displayAspectRatio = displayAspectRatio;
+    }
+
+    public String getPixFmt() {
+        return pixFmt;
+    }
+
+    public void setPixFmt(String pixFmt) {
+        this.pixFmt = pixFmt;
     }
 }
