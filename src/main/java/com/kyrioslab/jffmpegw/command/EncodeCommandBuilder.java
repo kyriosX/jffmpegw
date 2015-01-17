@@ -48,6 +48,8 @@ public class EncodeCommandBuilder {
                 String frameRate = stream.getAvgFrameRate();
                 String width = stream.getWidth();
                 String height = stream.getHeight();
+                String aspectRatio = stream.getDisplayAspectRatio();
+                String pixelFormat = stream.getPixFmt();
 
                 if (!Strings.isNullOrEmpty(codecName)) {
                     va.setCodec(codecName);
@@ -62,6 +64,15 @@ public class EncodeCommandBuilder {
                         !Strings.isNullOrEmpty(height)) {
                     va.setVideoSize(width + "x" + height);
                 }
+                if (!Strings.isNullOrEmpty(aspectRatio)) {
+                    va.setAspectRatio(aspectRatio);
+                }
+                if (!Strings.isNullOrEmpty(pixelFormat)) {
+                    va.setPixelFormat(pixelFormat);
+                }
+                if (stream.isDisabled()) {
+                    va.setDisabled();
+                }
                 skel.add(va);
             }
             break;
@@ -73,6 +84,7 @@ public class EncodeCommandBuilder {
                 String bitRate = stream.getBitRate();
                 String channels = stream.getChannels();
                 String sampleRate = stream.getSampleRate();
+                String volume  = stream.getVolume();
 
                 if (!Strings.isNullOrEmpty(codecName)) {
                     aa.setCodec(codecName);
@@ -85,6 +97,12 @@ public class EncodeCommandBuilder {
                 }
                 if (!Strings.isNullOrEmpty(sampleRate)) {
                     aa.setSamplingRate(sampleRate);
+                }
+                if (!Strings.isNullOrEmpty(volume)) {
+                    aa.setVolume(volume);
+                }
+                if (stream.isDisabled()) {
+                    aa.setDisabled();
                 }
                 skel.add(aa);
             }
@@ -124,7 +142,12 @@ public class EncodeCommandBuilder {
 
         //add attributes
         for (Map.Entry<String, String> atrr : attributes.getAttributes().entrySet()) {
-            command.addAttribute(atrr.getKey(), atrr.getValue());
+            String val = atrr.getValue();
+            if (!Strings.isNullOrEmpty(val)) {
+                command.addAttribute(atrr.getKey(), val);
+            } else {
+                command.addAttribute(atrr.getKey());
+            }
         }
     }
 }

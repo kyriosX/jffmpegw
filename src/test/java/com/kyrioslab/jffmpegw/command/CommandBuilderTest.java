@@ -21,6 +21,9 @@ public class CommandBuilderTest {
         vs.setHeight("420");
         vs.setWidth("360");
         vs.setIndex(0);
+        vs.setDisplayAspectRatio("4:2");
+        vs.setPixFmt("yum420p");
+
 
         StreamInfo as = new StreamInfo();
         as.setCodecType("audio");
@@ -29,6 +32,8 @@ public class CommandBuilderTest {
         as.setSampleRate("36000");
         as.setIndex(1);
         as.setChannels("2");
+        as.setDisabled(true);
+        as.setVolume("10");
 
         EncodeCommandBuilder builder = new EncodeCommandBuilder("testloc",
                 Arrays.asList(vs,as));

@@ -57,4 +57,14 @@ public class AudioAttributes extends Attributes implements Command.Attributes.Au
     public void setVolume(String volume) {
         attributes.put(VOLUME, volume);
     }
+
+    @Override
+    public String isDisabled() {
+        return attributes.get(DISABLE_AUDIO);
+    }
+
+    @Override
+    public void setDisabled() {
+        attributes.put(DISABLE_AUDIO, "");
+    }
 }

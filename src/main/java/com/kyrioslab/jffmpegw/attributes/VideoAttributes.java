@@ -50,11 +50,42 @@ public class VideoAttributes extends Attributes implements Command.Attributes.Vi
 
     @Override
     public String getVideoSize() {
-       return attributes.get(SIZE);
+        return attributes.get(SIZE);
     }
 
     @Override
     public void setVideoSize(String size) {
         attributes.put(SIZE, size);
     }
+
+    @Override
+    public String getAspectRatio() {
+        return attributes.get(ASPECT_RATIO);
+    }
+
+    @Override
+    public void setAspectRatio(String aspect) {
+        attributes.put(ASPECT_RATIO, aspect);
+    }
+
+    @Override
+    public String getPixelFormat() {
+        return attributes.get(PIXEL_FORMAT);
+    }
+
+    @Override
+    public void setPixelFormat(String pixelFormat) {
+        attributes.put(PIXEL_FORMAT, pixelFormat);
+    }
+
+    @Override
+    public String isDisabled() {
+        return attributes.get(DISABLE_VIDEO);
+    }
+
+    @Override
+    public void setDisabled() {
+        attributes.put(DISABLE_VIDEO, "");
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.kyrioslab.jffmpegw.command;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +20,8 @@ public class SplitCommand extends Command {
     public SplitCommand(String FFMPEGLocation,
                         String input,
                         int segmentTime,
-                        int map) {
+                        int map,
+                        String duration) {
 
         command.addAll(Arrays.asList(FFMPEGLocation,
                 Attributes.Common.INPUT,
@@ -34,6 +34,10 @@ public class SplitCommand extends Command {
                 Attributes.Common.CODEC_COPY,
                 Attributes.Common.MAP,
                 String.valueOf(map)));
+        if (duration != null) {
+            command.add(Attributes.Common.DURATION);
+            command.add(duration);
+        }
     }
 
     @Override

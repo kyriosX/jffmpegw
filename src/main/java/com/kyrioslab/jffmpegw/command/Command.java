@@ -90,10 +90,13 @@ public abstract class Command implements Serializable{
         public interface Video {
             public static final String CODEC = "-vcodec";
             public static final String TAG = "-vtag";
-            public static final String BIT_RATE = "-b";
+            public static final String BIT_RATE = "-vb";
             public static final String FRAME_RATE = "-r";
             public static final String SIZE = "-s";
             public static final String MAP = "-map";
+            public static final String ASPECT_RATIO = "-aspect";
+            public static final String PIXEL_FORMAT = "-pix_fmt";
+            public static final String DISABLE_VIDEO = "-vn";
 
             public String getCodec();
 
@@ -114,6 +117,18 @@ public abstract class Command implements Serializable{
             public String getVideoSize();
 
             public void setVideoSize(String vsize);
+
+            public String getAspectRatio();
+
+            public void setAspectRatio(String aspect);
+
+            public String getPixelFormat();
+
+            public void setPixelFormat(String pixelFormat);
+
+            public String isDisabled();
+
+            public void setDisabled();
         }
 
         /**
@@ -126,6 +141,7 @@ public abstract class Command implements Serializable{
             public static final String SAMPLING_RATE = "-ar";
             public static final String VOLUME = "-vol";
             public static final String MAP = "-map";
+            public static final String DISABLE_AUDIO = "-an";
 
             public String getCodec();
 
@@ -146,6 +162,10 @@ public abstract class Command implements Serializable{
             public String getVolume();
 
             public void setVolume(String volume);
+
+            public String isDisabled();
+
+            public void setDisabled();
         }
     }
 

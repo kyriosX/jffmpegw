@@ -5,6 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Ivan Kirilyuk on 10.01.15.
  *
+ * A Class aggregates multimedia stream information.
  */
 public class StreamInfo implements Serializable {
 
@@ -21,6 +22,19 @@ public class StreamInfo implements Serializable {
     private String bitRate;
     private String sampleRate;
     private String channels;
+    private TagsInfo tags;
+
+    //attributes coming from GUI
+
+    /**
+     * Disable stream recording.
+     */
+    private boolean disabled = false;
+
+    /**
+     * Volume. For audio stream.
+     */
+    private String volume;
 
     public StreamInfo() {
     }
@@ -127,5 +141,29 @@ public class StreamInfo implements Serializable {
 
     public void setPixFmt(String pixFmt) {
         this.pixFmt = pixFmt;
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
+    }
+
+    public String getVolume() {
+        return volume;
+    }
+
+    public void setVolume(String volume) {
+        this.volume = volume;
+    }
+
+    public TagsInfo getTags() {
+        return tags;
+    }
+
+    public void setTags(TagsInfo tags) {
+        this.tags = tags;
     }
 }
